@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QUẢN LÝ NHÂN VIÊN</title>
+
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FLOWBITE CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+
+  <body class="bg-slate-100">
+    <div class="flex min-h-screen">
+      <!-- SIDEBAR -->
+      <aside class="w-64 bg-slate-900 text-white p-6">
+        <h2 class="text-2xl font-bold mb-10">EMPLOYEE</h2>
+
+        <nav>
+          <ul class="space-y-3">
+            <li>
+              <a href="#" class="block p-3 rounded-lg bg-blue-600">
+                Trang chủ
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="block p-3 rounded-lg hover:bg-slate-700">
+                Danh sách nhân viên
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="block p-3 rounded-lg hover:bg-slate-700">
+                Thống kê
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="block p-3 rounded-lg hover:bg-slate-700">
+                Cài đặt
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="flex-1">
+        <!-- HEADER -->
+        <header
+          class="bg-white shadow-sm p-6 flex justify-between items-center"
+        >
+          <h1 class="text-2xl font-bold text-slate-800">Quản lý nhân viên</h1>
+
+          <div class="text-slate-600">Xin chào, Admin!</div>
+        </header>
+
+        <!-- CONTENT -->
+        <section class="p-6">
+          <h2 class="text-xl font-semibold text-slate-700 mb-6">
+            Tổng quan hệ thống
+          </h2>
+
+          <!-- STATISTICS -->
+          <div class="grid grid-cols-4 gap-6">
+            <!-- CARD 1 -->
+            <div class="bg-white p-6 rounded-xl shadow">
+              <h3 class="text-gray-500 text-sm">Tổng nhân viên</h3>
+
+              <p class="text-3xl font-bold text-blue-600 mt-3">120</p>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="bg-white p-6 rounded-xl shadow">
+              <h3 class="text-gray-500 text-sm">Giám đốc</h3>
+
+              <p class="text-3xl font-bold text-green-600 mt-3">05</p>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="bg-white p-6 rounded-xl shadow">
+              <h3 class="text-gray-500 text-sm">Trưởng phòng</h3>
+
+              <p class="text-3xl font-bold text-yellow-600 mt-3">15</p>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="bg-white p-6 rounded-xl shadow">
+              <h3 class="text-gray-500 text-sm">Nhân viên</h3>
+
+              <p class="text-3xl font-bold text-purple-600 mt-3">100</p>
+            </div>
+          </div>
+
+          <!-- EMPLOYEE LIST -->
+          <div class="bg-white rounded-xl shadow mt-8 p-6">
+            <!-- TITLE -->
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-bold text-slate-700">
+                Danh sách nhân viên
+              </h2>
+
+              <button
+                data-modal-target="employeeModal"
+                data-modal-toggle="employeeModal"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg"
+              >
+                + Thêm nhân viên
+              </button>
+            </div>
+
+            <h3 class="text-lg font-semibold mb-3">
+              Tìm kiếm và lọc nhân viên
+            </h3>
+
+            <!-- SEARCH -->
+            <div class="flex gap-3 mb-6">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Nhập tên nhân viên..."
+                class="border border-gray-300 rounded-lg p-3 w-80"
+              />
+
+              <button
+                onclick="searchEmployee()"
+                class="bg-slate-700 hover:bg-slate-800 text-white px-5 rounded-lg"
+              >
+                Tìm kiếm
+              </button>
+
+              <select
+                id="employeeTypeFilter"
+                onchange="filterEmployeeByType()"
+                class="border border-gray-300 rounded-lg p-3"
+              >
+                <option value="">Tất cả nhân viên</option>
+                <option value="Xuất sắc">Xuất sắc</option>
+                <option value="Giỏi">Giỏi</option>
+                <option value="Khá">Khá</option>
+                <option value="Trung bình">Trung bình</option>
+              </select>
+            </div>
+
+            <!-- TABLE -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm text-left">
+                <thead class="bg-slate-100 text-slate-700">
+                  <tr>
+                    <th class="p-4">Tài khoản</th>
+                    <th class="p-4">Họ tên</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Chức vụ</th>
+                    <th class="p-4">Tổng lương</th>
+                    <th class="p-4">Xếp loại</th>
+                    <th class="p-4">Thao tác</th>
+                  </tr>
+                </thead>
+
+                <tbody id="employeeList">
+                  <!-- Dữ liệu nhân viên sẽ được thêm bằng JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MODAL THÊM NHÂN VIÊN -->
+    <div
+      id="employeeModal"
+      tabindex="-1"
+      aria-hidden="true"
+      class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full bg-black/50"
+    >
+      <div class="relative p-4 w-full max-w-2xl">
+        <div class="relative bg-white rounded-xl shadow">
+          <!-- MODAL HEADER -->
+          <div class="flex justify-between items-center p-5 border-b">
+            <h3 class="text-xl font-bold text-slate-800">
+              Thông tin nhân viên
+            </h3>
+
+            <button
+              type="button"
+              data-modal-hide="employeeModal"
+              class="text-gray-400 hover:text-gray-900 text-2xl"
+            >
+              &times;
+            </button>
+          </div>
+
+          <!-- MODAL BODY -->
+          <div class="p-6">
+            <form id="employeeForm">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Tài khoản
+                  </label>
+
+                  <input
+                    type="text"
+                    id="account"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập tài khoản"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium"> Họ tên </label>
+
+                  <input
+                    type="text"
+                    id="name"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập họ tên"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium"> Email </label>
+
+                  <input
+                    type="email"
+                    id="email"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập email"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Mật khẩu
+                  </label>
+
+                  <input
+                    type="password"
+                    id="password"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập mật khẩu"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Ngày làm
+                  </label>
+
+                  <input
+                    type="date"
+                    id="date"
+                    class="w-full border rounded-lg p-3"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Lương cơ bản
+                  </label>
+
+                  <input
+                    type="number"
+                    id="salary"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập lương"
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Chức vụ
+                  </label>
+
+                  <select id="position" class="w-full border rounded-lg p-3">
+                    <option value="">Chọn chức vụ</option>
+                    <option value="Giám đốc">Giám đốc</option>
+                    <option value="Trưởng phòng">Trưởng phòng</option>
+                    <option value="Nhân viên">Nhân viên</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block mb-2 text-sm font-medium">
+                    Giờ làm trong tháng
+                  </label>
+
+                  <input
+                    type="number"
+                    id="workingHours"
+                    class="w-full border rounded-lg p-3"
+                    placeholder="Nhập số giờ làm"
+                  />
+                </div>
+              </div>
+
+              <!-- BUTTON -->
+              <div class="flex justify-end gap-3 mt-6">
+                <button
+                  type="button"
+                  data-modal-hide="employeeModal"
+                  class="px-5 py-3 bg-gray-200 rounded-lg"
+                >
+                  Đóng
+                </button>
+
+                <button
+                  type="button"
+                  onclick="addEmployee()"
+                  class="px-5 py-3 bg-green-600 text-white rounded-lg"
+                >
+                  Thêm nhân viên
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOWBITE JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+    <!-- PROJECT JAVASCRIPT -->
+    <script src="./JS/employee.js"></script>
+    <script src="./JS/main.js"></script>
+  </body>
+</html>
